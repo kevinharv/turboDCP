@@ -16,7 +16,8 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: "TurboDCP",
-  description: "Blazingly fast transcoding and packaging for cinema distribution!",
+  description:
+    "Blazingly fast transcoding and packaging for cinema distribution!",
 };
 
 // To-Do - check based on session (probably checked by middleware, used here)
