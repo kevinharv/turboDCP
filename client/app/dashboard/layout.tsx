@@ -43,7 +43,7 @@ export default function DashboardLayout({
             <strong>{name}</strong>
             
           </span>
-          <button className="mr-4 p-2 rounded-md bg-gray-800">Logout</button>
+          <button className="bg-gray-800 px-4 py-2 rounded hover:bg-gray-900 mr-2">Logout</button>
         </div>
       </div>
 
