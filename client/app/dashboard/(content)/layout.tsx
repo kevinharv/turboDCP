@@ -5,8 +5,7 @@ export default function DashboardContentLayout({
 }) {
 
   return (
-    <section className="flex flex-col h-full text-slate-950 p-4">
-        <h1>Hello There!</h1>
+    <section className="flex flex-col h-full w-full text-slate-950 p-4">
         {children}
     </section>
   );

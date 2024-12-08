@@ -21,7 +21,7 @@ export default function DashboardLayout({
   
   // To-Do - retrieve user info from session
   const name = "Test User";
-
+  
   return (
     <section className="flex flex-col h-screen">
       <div className="bg-gray-700 w-full h-16 flex justify-between items-center">
@@ -43,7 +43,7 @@ export default function DashboardLayout({
             <strong>{name}</strong>
             
           </span>
-          <button className="mr-4 p-2 rounded-md bg-red-700">Logout</button>
+          <button className="mr-4 p-2 rounded-md bg-gray-800">Logout</button>
         </div>
       </div>
 
@@ -74,7 +74,6 @@ export default function DashboardLayout({
             </div>
           </Link>
         </nav>
-        
 
         {children}
       </section>
