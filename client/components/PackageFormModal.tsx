@@ -1,28 +1,29 @@
 import { useState } from "react";
+import MediaList from "./MediaList";
 
-// To-Do - re-factor into SSR friendly (useFormState?)
-
-export default function MediaFormModal({ toggleOpen }: { toggleOpen: any }) {
-  const [containerRatio, setContainerRatio] = useState("");
-  const [contentRatio, setContentRatio] = useState("");
+export default function PackageFormModal({ toggleOpen }: { toggleOpen: any }) {
+  const [containerRatio, setContainerRatio] = useState(0);
+  const [contentRatio, setContentRatio] = useState(0);
   const [contentType, setContentType] = useState("");
+  const [selectedMedia, setSelectedMedia] = useState("");
+  
   const containerRatios = [
-    { value: "119", label: "119" },
-    { value: "133", label: "133" },
-    { value: "137", label: "137" },
-    { value: "166", label: "166" },
-    { value: "178", label: "178" },
-    { value: "185", label: "185 (default)" },
-    { value: "239", label: "239" },
+    { value: 119, label: "119" },
+    { value: 133, label: "133" },
+    { value: 137, label: "137" },
+    { value: 166, label: "166" },
+    { value: 178, label: "178" },
+    { value: 185, label: "185 (default)" },
+    { value: 239, label: "239" },
   ];
   const contentRatios = [
-    { value: "119", label: "119" },
-    { value: "133", label: "133" },
-    { value: "137", label: "137" },
-    { value: "166", label: "166" },
-    { value: "178", label: "178" },
-    { value: "185", label: "185 (default)" },
-    { value: "239", label: "239" },
+    { value: 119, label: "119" },
+    { value: 133, label: "133" },
+    { value: 137, label: "137" },
+    { value: 166, label: "166" },
+    { value: 178, label: "178" },
+    { value: 185, label: "185 (default)" },
+    { value: 239, label: "239" },
   ];
   const contentTypes = [
     { value: "FTR", label: "Feature" },
@@ -38,16 +39,16 @@ export default function MediaFormModal({ toggleOpen }: { toggleOpen: any }) {
   ];
 
   return (
-    <>
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div className="bg-white w-full max-w-xl rounded shadow-lg p-6">
-          {/* Modal Header */}
-          <div className="flex justify-between items-center border-b pb-3">
-            <h2 className="text-lg font-semibold">Create Package</h2>
-          </div>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white w-full max-w-6xl rounded shadow-lg p-6">
+        {/* Modal Header */}
+        <div className="flex justify-between items-center border-b pb-3">
+          <h2 className="text-lg font-semibold">Create Package</h2>
+        </div>
 
-          {/* Modal Content */}
-          <form className="mt-4">
+        {/* Modal Content */}
+        <form className="mt-4 flex">
+          <div className="w-1/2">
             <div className="mb-4">
               <label
                 htmlFor="jobName"
@@ -90,7 +91,7 @@ export default function MediaFormModal({ toggleOpen }: { toggleOpen: any }) {
                 id="dropdown"
                 required
                 value={containerRatio}
-                onChange={(e) => setContainerRatio(e.target.value)}
+                onChange={(e) => setContainerRatio(parseInt(e.target.value))}
                 className="w-full mt-1 px-3 py-2 bg-white border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="" disabled>
@@ -115,7 +116,7 @@ export default function MediaFormModal({ toggleOpen }: { toggleOpen: any }) {
                 id="dropdown"
                 required
                 value={contentRatio}
-                onChange={(e) => setContentRatio(e.target.value)}
+                onChange={(e) => setContentRatio(parseInt(e.target.value))}
                 className="w-full mt-1 px-3 py-2 bg-white border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="" disabled>
@@ -164,12 +165,14 @@ export default function MediaFormModal({ toggleOpen }: { toggleOpen: any }) {
               <input
                 type="number"
                 id="frameRate"
+                defaultValue={24}
                 className="w-full mt-1 px-3 py-2 border rounded-lg shadow-sm"
               />
             </div>
+          </div>
 
-            {/* To-Do - create nice searchable list of content */}
-            <h2>Source (searchable list of uploaded content)</h2>
+          <div className="w-1/2 ml-4 flex flex-col justify-between">
+            <MediaList selectedMedia={selectedMedia} setSelectedMedia={setSelectedMedia} />
 
             {/* Modal Actions */}
             <div className="flex justify-end">
@@ -187,9 +190,9 @@ export default function MediaFormModal({ toggleOpen }: { toggleOpen: any }) {
                 Submit
               </button>
             </div>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
-    </>
+    </div>
   );
 }

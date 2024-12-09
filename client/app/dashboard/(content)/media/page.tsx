@@ -1,6 +1,6 @@
 "use client";
 
-import MediaFormModal from "@/components/MediaFormModal";
+import PackageFormModal from "@/components/PackageFormModal";
 import { ArrowPathIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 
@@ -14,7 +14,7 @@ export default function Media() {
 
     return (
         <>
-            {isOpen && <MediaFormModal toggleOpen={toggleOpen} />}
+            {isOpen && <PackageFormModal toggleOpen={toggleOpen} />}
             <div className="w-full h-16 mb-1 bg-gray-100 rounded-md p-4 items-center flex justify-between">
                 <button className="hover:bg-gray-200 p-1 rounded-lg flex" onClick={toggleOpen}><PlusCircleIcon className="size-6 mr-1" />New</button>
                 <button className="hover:bg-gray-200 p-1 rounded-lg"><ArrowPathIcon className="size-6" /></button>
