@@ -1,5 +1,5 @@
 import { useState } from "react";
-import MediaList from "./MediaList";
+import MediaList from "./MediaSelectList";
 
 export default function PackageFormModal({ toggleOpen }: { toggleOpen: any }) {
   const [containerRatio, setContainerRatio] = useState(0);
@@ -47,7 +47,7 @@ export default function PackageFormModal({ toggleOpen }: { toggleOpen: any }) {
         </div>
 
         {/* Modal Content */}
-        <form className="mt-4 flex">
+        <form className="mt-4 flex" onSubmit={(e) => alert(e.target)}>
           <div className="w-1/2">
             <div className="mb-4">
               <label
