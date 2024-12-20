@@ -33,57 +33,31 @@ export default function MediaList() {
   ];
 
   return (
-    // <>
-    //   <div className="w-full flex justify-between align-center items-center py-2 border-b-2 border-slate-300">
-    //     <div className="w-1/6">
-    //       <strong>Title</strong>
-    //     </div>
-    //     <div className="w-5/6">
-    //       <strong>Description</strong>
-    //     </div>
-    //   </div>
-
-    //   <div className="max-h-96 overflow-y-scroll">
-    //     <ul>
-    //       {list.map((media) => (
-    //         <ListEntry
-    //           key={media.name}
-    //           name={media.name}
-    //           description={media.description}
-    //           onAction={() => alert(`Play ${media.name}`)}
-    //           onDelete={() => alert(`Delete ${media.name}`)}
-    //         />
-    //       ))}
-    //     </ul>
-    //   </div>
-    // </>
-
     <div className="flex flex-col h-full">
-  {/* Header */}
-  <div className="w-full flex justify-between items-center py-2 border-b-2 border-slate-300">
-    <div className="w-1/6">
-      <strong>Title</strong>
-    </div>
-    <div className="w-5/6">
-      <strong>Description</strong>
-    </div>
-  </div>
+      {/* Header */}
+      <div className="w-full flex justify-between items-center py-2 border-b-2 border-slate-300">
+        <div className="w-1/6">
+          <strong>Title</strong>
+        </div>
+        <div className="w-5/6">
+          <strong>Description</strong>
+        </div>
+      </div>
 
-  {/* Scrollable List */}
-  <div className="flex-1 overflow-y-scroll">
-    <ul className="mr-2">
-      {list.map((media) => (
-        <ListEntry
-          key={media.name}
-          name={media.name}
-          description={media.description}
-          onAction={() => alert(`Play ${media.name}`)}
-          onDelete={() => alert(`Delete ${media.name}`)}
-        />
-      ))}
-    </ul>
-  </div>
-</div>
-
+      {/* Scrollable List */}
+      <div className="flex-1 overflow-y-scroll">
+        <ul className="mr-2">
+          {list.map((media) => (
+            <ListEntry
+              key={media.name}
+              name={media.name}
+              description={media.description}
+              onAction={() => alert(`Play ${media.name}`)}
+              onDelete={() => alert(`Delete ${media.name}`)}
+            />
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 }

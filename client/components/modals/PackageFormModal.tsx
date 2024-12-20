@@ -6,7 +6,7 @@ export default function PackageFormModal({ toggleOpen }: { toggleOpen: any }) {
   const [contentRatio, setContentRatio] = useState(0);
   const [contentType, setContentType] = useState("");
   const [selectedMedia, setSelectedMedia] = useState("");
-  
+
   const containerRatios = [
     { value: 119, label: "119" },
     { value: 133, label: "133" },
@@ -172,10 +172,17 @@ export default function PackageFormModal({ toggleOpen }: { toggleOpen: any }) {
           </div>
 
           <div className="w-1/2 ml-4 flex flex-col justify-between">
-            <MediaList selectedMedia={selectedMedia} setSelectedMedia={setSelectedMedia} />
+            <label
+              htmlFor="frameRate"
+              className="block text-sm font-medium text-gray-700 ml-1"
+            >Select Media</label>
+            <MediaList
+              selectedMedia={selectedMedia}
+              setSelectedMedia={setSelectedMedia}
+            />
 
             {/* Modal Actions */}
-            <div className="flex justify-end">
+            <div className="flex justify-end mt-2">
               <button
                 type="button"
                 onClick={toggleOpen}
