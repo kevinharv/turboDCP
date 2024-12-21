@@ -1,0 +1,24 @@
+---
+services:
+  database:
+    image: postgres:16
+    container_name: tdcp-db
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+      # - ./migrations:/docker-entrypoint-initdb.d/
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: tdcp
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres", "-d", "server"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+
+volumes:
+  dbdata:
+    name: db_volume
