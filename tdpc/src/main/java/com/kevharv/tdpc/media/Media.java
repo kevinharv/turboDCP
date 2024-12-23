@@ -12,12 +12,15 @@ public class Media {
     private long id;
     private String name;
     private String description;
+    private String filepath;
+    private boolean archived;
 
     public Media() {}
 
     public Media(String name, String description) {
         this.name = name;
         this.description = description;
+        this.filepath = null;
     }
 
     public long getId() {
@@ -44,12 +47,31 @@ public class Media {
         this.description = description;
     }
 
+    public String getFilepath() {
+        return filepath;
+    }
+
+    public void setFilepath(String filepath) {
+        this.filepath = filepath;
+    }
+
+    public boolean isArchived() {
+        return archived;
+    }
+
+    public void setArchived(boolean archived) {
+        this.archived = archived;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
+        result = prime * result + (int) (id ^ (id >>> 32));
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         result = prime * result + ((description == null) ? 0 : description.hashCode());
+        result = prime * result + ((filepath == null) ? 0 : filepath.hashCode());
+        result = prime * result + (archived ? 1231 : 1237);
         return result;
     }
 
@@ -62,6 +84,8 @@ public class Media {
         if (getClass() != obj.getClass())
             return false;
         Media other = (Media) obj;
+        if (id != other.id)
+            return false;
         if (name == null) {
             if (other.name != null)
                 return false;
@@ -72,6 +96,15 @@ public class Media {
                 return false;
         } else if (!description.equals(other.description))
             return false;
+        if (filepath == null) {
+            if (other.filepath != null)
+                return false;
+        } else if (!filepath.equals(other.filepath))
+            return false;
+        if (archived != other.archived)
+            return false;
         return true;
     }
+
+
 }
