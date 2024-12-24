@@ -1,4 +1,4 @@
-import { PlayIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { InformationCircleIcon, PlayIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { MouseEventHandler } from "react";
 
 export default function ListEntry({
@@ -6,11 +6,13 @@ export default function ListEntry({
   description,
   onAction,
   onDelete,
+  isEmpty,
 }: {
   name: string;
   description: string;
   onAction: MouseEventHandler<HTMLButtonElement>;
   onDelete: MouseEventHandler<HTMLButtonElement>;
+  isEmpty: boolean;
 }) {
     return (
       <li>
@@ -18,8 +20,9 @@ export default function ListEntry({
             <div className="w-2/12 pr-2">{name}</div>
             <div className="w-9/12 pr-2">{description}</div>
             <div className="w-1/12 flex justify-end">
-                <button className="hover:bg-gray-200 p-1 rounded-lg" onClick={onAction}><PlayIcon className="size-6" /></button>
-                <button className="hover:bg-gray-200 p-1 rounded-lg" onClick={onDelete}><TrashIcon className="size-6" /></button>
+              {isEmpty && <button className="p-1 rounded-lg text-orange-600" onClick={() => alert(`"${name}" has no file associated.`)}><InformationCircleIcon className="size-6" /></button>}
+              {!isEmpty && <button className="hover:bg-gray-200 p-1 rounded-lg" onClick={onAction}><PlayIcon className="size-6" /></button>}
+              <button className="hover:bg-gray-200 p-1 rounded-lg" onClick={onDelete}><TrashIcon className="size-6" /></button>
             </div>
         </div>
       </li>
