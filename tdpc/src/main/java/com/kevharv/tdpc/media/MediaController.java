@@ -1,6 +1,7 @@
 package com.kevharv.tdpc.media;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -21,18 +22,26 @@ import org.springframework.core.io.UrlResource;
 
 import com.kevharv.tdpc.exceptions.NotFoundException;
 
+import jakarta.annotation.PostConstruct;
+
 @RestController
 public class MediaController {
 
-    @Value("tdcp.file.basepath")
+    @Value("${tdcp.file.basepath}")
     private String baseFilePath;
-    private final Path fileStorageLocation = Paths.get("/tmp");
+    private Path fileStorageLocation;
 
     @Autowired
     private final MediaRepository mediaRepository;
 
     public MediaController(MediaRepository mediaRepository) {
         this.mediaRepository = mediaRepository;
+    }
+    
+    @PostConstruct
+    public void init() throws IOException {
+        fileStorageLocation = Paths.get("/tmp/videos");
+        Files.createDirectories(fileStorageLocation);
     }
 
     @GetMapping("/media")
@@ -59,18 +68,17 @@ public class MediaController {
             return ResponseEntity.badRequest().body("Empty file submitted.");
         }
 
-        if (file == null || !file.getContentType().equals("video/*")) {
-            return ResponseEntity.badRequest().body("Invalid file type. Only video files permitted.");
+        String originalFileName = file.getOriginalFilename();
+        if (originalFileName == null) {
+            return ResponseEntity.badRequest().body("Invalid file name.");
         }
-
-        if (file.getSize() > 1_000_000_000) {
-            // Reject >1GB
-            return ResponseEntity.badRequest().body("File too large. Please upload files smaller than 1GB.");
-        }
+        
+        String fileExtension = getFileExtension(originalFileName);
 
         try {
-            file.transferTo(new java.io.File(baseFilePath + "/" + Long.toString(id)));
-            media.setFilepath(baseFilePath + "/" + Long.toString(id));
+            Path targetPath = fileStorageLocation.resolve(id + fileExtension);
+            file.transferTo(targetPath);
+            media.setFilepath(id + fileExtension);
             mediaRepository.save(media);
         } catch (IOException e) {
             return ResponseEntity.internalServerError().body("Unable to save file.");
@@ -81,8 +89,10 @@ public class MediaController {
 
     @GetMapping("/media/{id}/download")
     public ResponseEntity<Resource> downloadMediaByID(@PathVariable Long id) {
+        Media media = mediaRepository.findById(id).orElseThrow(() -> new NotFoundException(id, "media"));
         try {
-            Path filePath = this.fileStorageLocation.resolve(Long.toString(id)).normalize();
+            // Path filePath = this.fileStorageLocation.resolve(Long.toString(id)).normalize();
+            Path filePath = fileStorageLocation.resolve(media.getFilepath());
             Resource resource = new UrlResource(filePath.toUri());
             if (resource.exists() || resource.isReadable()) {
                 return ResponseEntity.ok().body(resource);
@@ -110,5 +120,10 @@ public class MediaController {
     public ResponseEntity<String> deleteMediaByID(@PathVariable Long id) {
         mediaRepository.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    private String getFileExtension(String filename) {
+        int lastDotIndex = filename.lastIndexOf(".");
+        return (lastDotIndex == -1) ? "" : filename.substring(lastDotIndex);
     }
 }
