@@ -1,9 +1,13 @@
 package com.kevharv.tdpc.media;
 
+import java.util.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PostUpdate;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
 @Entity
@@ -17,6 +21,8 @@ public class Media {
     private String description;
     private String filepath;
     private boolean archived;
+    private Date created;
+    private Date lastUpdated;
 
     public Media() {}
 
@@ -64,6 +70,24 @@ public class Media {
 
     public void setArchived(boolean archived) {
         this.archived = archived;
+    }
+
+    public Date getCreated() {
+        return this.created;
+    }
+
+    public Date getLastUpdated() {
+        return this.lastUpdated;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.created = new Date();
+    }
+
+    @PostUpdate
+    protected void onUpdate() {
+        this.lastUpdated = new Date();
     }
 
     @Override
